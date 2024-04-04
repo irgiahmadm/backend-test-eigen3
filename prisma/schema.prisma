@@ -16,6 +16,8 @@ model Books {
   createdAt         DateTime?           @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt         DateTime?           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   memberBorrowBooks MemberBorrowBooks[]
+
+  @@map("books")
 }
 
 model Member {
@@ -26,6 +28,8 @@ model Member {
   createdAt         DateTime?           @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt         DateTime?           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   memberBorrowBooks MemberBorrowBooks[]
+
+  @@map("member")
 }
 
 model MemberBorrowBooks {
@@ -38,4 +42,6 @@ model MemberBorrowBooks {
   updatedAt   DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   books       Books     @relation(fields: [bookId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_id_borrow_fk")
   member      Member    @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "member_id_borrow_fk")
+
+  @@map("member_borrow_books")
 }
