@@ -23,7 +23,9 @@ model Books {
 model Member {
   id                String              @id @default(uuid()) @db.Uuid
   code              String              @db.VarChar(50)
-  name              String
+  name              String              @db.VarChar(50)
+  password          String
+  token             String?
   penalizedEndDate  DateTime?           @map("penalized_end_date") @db.Date
   createdAt         DateTime?           @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt         DateTime?           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)

@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { BookController } from './book.controller';
-import { BookService } from './book.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  controllers: [BookController],
-  providers: [BookService],
   imports: [
     JwtModule.registerAsync({
       imports: [ConfigModule], // Import ConfigModule here
@@ -17,7 +15,9 @@ import { JwtModule } from '@nestjs/jwt';
       }),
       inject: [ConfigService], // Inject ConfigService
     }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot(), // Configure ConfigModule
   ],
+  controllers: [AuthController],
+  providers: [AuthService],
 })
-export class BookModule {}
+export class AuthModule {}

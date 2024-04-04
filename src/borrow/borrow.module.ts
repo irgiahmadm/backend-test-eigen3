@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BookController } from './book.controller';
-import { BookService } from './book.service';
+import { BorrowController } from './borrow.controller';
+import { BorrowService } from './borrow.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  controllers: [BookController],
-  providers: [BookService],
+  controllers: [BorrowController],
+  providers: [BorrowService],
   imports: [
     JwtModule.registerAsync({
       imports: [ConfigModule], // Import ConfigModule here
@@ -20,4 +20,4 @@ import { JwtModule } from '@nestjs/jwt';
     ConfigModule.forRoot(),
   ],
 })
-export class BookModule {}
+export class BorrowModule {}
