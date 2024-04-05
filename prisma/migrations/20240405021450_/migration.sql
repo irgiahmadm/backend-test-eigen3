@@ -15,7 +15,9 @@ CREATE TABLE "books" (
 CREATE TABLE "member" (
     "id" UUID NOT NULL,
     "code" VARCHAR(50) NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
+    "password" TEXT NOT NULL,
+    "token" TEXT,
     "penalized_end_date" DATE,
     "created_at" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,

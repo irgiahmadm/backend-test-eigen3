@@ -8,10 +8,18 @@ export class MemberBorrowBooksDto {
   bookId: string;
 
   @ApiProperty()
-  borrowedAt: Date;
+  borrowedAt: string;
+}
+
+export class MemberReturnedBookDto {
+  @ApiProperty()
+  memberId: string;
 
   @ApiProperty()
-  hasReturned: number;
+  bookId: string;
+
+  @ApiProperty()
+  returnedAt: string;
 }
 
 export class BorrowBookResponse {
@@ -21,5 +29,5 @@ export class BorrowBookResponse {
 
   borrowedAt: string;
 
-  hasReturned: number;
+  returnedAt: string;
 }

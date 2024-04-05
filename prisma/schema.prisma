@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Books {
-  id                String              @id @default(uuid()) @db.Uuid
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   code              String              @db.VarChar(50)
   title             String
   author            String
@@ -21,7 +21,7 @@ model Books {
 }
 
 model Member {
-  id                String              @id @default(uuid()) @db.Uuid
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   code              String              @db.VarChar(50)
   name              String              @db.VarChar(50)
   password          String
@@ -35,15 +35,15 @@ model Member {
 }
 
 model MemberBorrowBooks {
-  id          String    @id @default(uuid()) @db.Uuid
-  memberId    String    @map("member_id") @db.Uuid
-  bookId      String    @map("book_id") @db.Uuid
-  borrowedAt  DateTime  @map("borrowed_at") @db.Timestamp(6)
-  hasReturned Int       @default(0) @map("has_returned") @db.SmallInt
-  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
-  books       Books     @relation(fields: [bookId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_id_borrow_fk")
-  member      Member    @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "member_id_borrow_fk")
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  memberId   String    @map("member_id") @db.Uuid
+  bookId     String    @map("book_id") @db.Uuid
+  borrowedAt DateTime  @map("borrowed_at") @db.Timestamp(6)
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  returnedAt DateTime? @map("returned_at") @db.Timestamptz(6)
+  books      Books     @relation(fields: [bookId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_id_borrow_fk")
+  member     Member    @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "member_id_borrow_fk")
 
   @@map("member_borrow_books")
 }

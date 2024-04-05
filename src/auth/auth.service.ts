@@ -53,8 +53,7 @@ export class AuthService {
 
       return userResponse;
     } catch (error) {
-      console.log(error);
-      throw new HttpException(error, 500);
+      throw error;
     }
   }
 }

@@ -5,6 +5,7 @@ import {
   Post,
   UseGuards,
   Request,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseWeb } from 'src/interface/response.interface';
@@ -17,19 +18,30 @@ import { AuthGuard } from './auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('login')
+  @HttpCode(200)
   @ApiOperation({ summary: 'Login Member' })
   async login(
     @Body() userDto: LoginUserDto,
   ): Promise<ResponseWeb<MemberResponse>> {
-    const result = await this.authService.login(userDto);
-    const response: ResponseWeb<MemberResponse> = {
-      status: 'success',
-      statusCode: 200,
-      message: 'Success login',
-      data: result,
-    };
+    try {
+      const result = await this.authService.login(userDto);
+      const response: ResponseWeb<MemberResponse> = {
+        status: 'success',
+        statusCode: 200,
+        message: 'Success login',
+        data: result,
+      };
 
-    return response;
+      return response;
+    } catch (error) {
+      const response: ResponseWeb<MemberResponse> = {
+        status: 'failed',
+        statusCode: error.status,
+        message: error.message,
+        data: null,
+      };
+      throw response;
+    }
   }
 
   @UseGuards(AuthGuard)
